@@ -1,7 +1,12 @@
+#ifndef __GOBJECT__
+#define __GOBJECT__
+
 #include "TutiConstants.h"
 
 class GObject {
 public:
+	GObject();
+	
 	//appearance polygon
 	float *apPolygon; ///arrays of points in appearance polygon (will just be a rectangle most of the time)
 	int    napVert;   ///number of points in appearance polygon
@@ -16,3 +21,4 @@ public:
 	
 	int layer;
 };
+#endif
