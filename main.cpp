@@ -2,10 +2,10 @@
 
 float val = 300;
 int main(int argc, char **argv) {
-	float rect[] = {-val, val,
-	                -val,-val,
-					 val,-val,
-					 val, val };
+	float rect[] = { 0  , 0,
+	                 0  , val,
+					 val, val,
+					 val,   0 };
 	GKernel *k = GKernel::getInstance();
 	GScene *scene = new GScene();
 	GObject *obj = new GObject();

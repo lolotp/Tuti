@@ -19,7 +19,7 @@ int cnt = 0;
 				
 				glEnableClientState(GL_VERTEX_ARRAY);
 				glVertexPointer(TUTI_DIM, GL_FLOAT, 0, obj->apPolygon);
-				glDrawArrays(GL_TRIANGLE_STRIP, 0, obj->napVert);
+				glDrawArrays(GL_TRIANGLE_FAN, 0, obj->napVert);
 				glDisableClientState(GL_VERTEX_ARRAY);	
 			}
 		}
