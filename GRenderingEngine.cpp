@@ -7,9 +7,8 @@ int cnt = 0;
 
  void GRenderingEngine::drawScene(GScene *activeScene) {
 	
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// Clear The Screen And The Depth Buffer
+	glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();				// Reset The View
-    glTranslatef(0.0f,0.0f,-1.0f);
 	
 	if (activeScene != NULL) {
 		std::vector<Layer>& layers = activeScene->objByLayer;

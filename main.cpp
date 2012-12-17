@@ -1,6 +1,6 @@
 #include "GKernel.h"
 
-float val = 0.5;
+float val = 300;
 int main(int argc, char **argv) {
 	float rect[] = {-val, val,
 	                -val,-val,
