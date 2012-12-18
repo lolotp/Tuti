@@ -3,6 +3,7 @@ extern "C" {
 #include <png.h>
 }
 #include <stdio.h>
+#include <stdlib.h>
 #include "def.h"
 #include <zip.h>
 
@@ -25,67 +26,47 @@ zip_file* file;
 void png_zip_read(png_structp png_ptr, png_bytep data, png_size_t length) {
   zip_fread(file, data, length);
 }
-
+int x, y;
+png_byte color_type;
+png_byte bit_depth;
+png_structp png_ptr;
+png_infop info_ptr;
+int number_of_passes;
+png_bytep * row_pointers;
 GLuint loadTextureFromPNG(const char* filename, int &width, int &height) {
-  FILE *file;
-  file = fopen(filename, "r");
-  if (!file) {
-    //LOGE("Error opening %s from APK", filename);
-    return TEXTURE_LOAD_ERROR;
-  }
+  png_byte header[8];    // 8 is the maximum size that can be checked
 
-  //header for testing if it is a png
-  png_byte header[8];
+        /* open file and test for it being a png */
+        FILE *fp = fopen(filename, "rb");
+        if (!fp)
+                printf("[read_png_file] File %s could not be opened for reading", filename);
+        fread(header, 1, 8, fp);
+        if (png_sig_cmp(header, 0, 8))
+                printf("[read_png_file] File %s is not recognized as a PNG file", filename);
 
-  //read the header
-  fread(header, sizeof(png_byte), 8, file);
 
-  //test if png
-  int is_png = !png_sig_cmp(header, 0, 8);
-  if (!is_png) {
-    fclose(file);
-    //LOGE("Not a png file : %s", filename);
-    return TEXTURE_LOAD_ERROR;
-  }
+        /* initialize stuff */
+        png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
 
-  //create png struct
-  png_structp png_ptr = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL,
-      NULL, NULL);
-  if (!png_ptr) {
-    fclose(file);
-    //LOGE("Unable to create png struct : %s", filename);
-    return (TEXTURE_LOAD_ERROR);
-  }
+        if (!png_ptr)
+                printf("[read_png_file] png_create_read_struct failed");
 
-  //create png info struct
-  png_infop info_ptr = png_create_info_struct(png_ptr);
-  if (!info_ptr) {
-    png_destroy_read_struct(&png_ptr, (png_infopp) NULL, (png_infopp) NULL);
-    //LOGE("Unable to create png info : %s", filename);
-    fclose(file);
-    return (TEXTURE_LOAD_ERROR);
-  }
-
-  //create png info struct
-  png_infop end_info = png_create_info_struct(png_ptr);
+        info_ptr = png_create_info_struct(png_ptr);
+        if (!info_ptr)
+                printf("[read_png_file] png_create_info_struct failed");
+png_infop end_info = png_create_info_struct(png_ptr);
   if (!end_info) {
     png_destroy_read_struct(&png_ptr, &info_ptr, (png_infopp) NULL);
-    //LOGE("Unable to create png end info : %s", filename);
-    fclose(file);
+    printf("Unable to create png end info : %s", filename);
+    fclose(fp);
     return (TEXTURE_LOAD_ERROR);
   }
+        if (setjmp(png_jmpbuf(png_ptr)))
+                printf("[read_png_file] Error during init_io");
 
-  //png error stuff, not sure libpng man suggests this.
-  if (setjmp(png_jmpbuf(png_ptr))) {
-    fclose(file);
-    //LOGE("Error during setjmp : %s", filename);
-    png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-    return (TEXTURE_LOAD_ERROR);
-  }
-
-  //init png reading
-  //png_init_io(png_ptr, fp);
-  png_set_read_fn(png_ptr, NULL, png_zip_read);
+        //init png reading
+  png_init_io(png_ptr, fp);
+  //png_set_read_fn(png_ptr, NULL, png_zip_read);
 
   //let libpng know you already read the first 8 bytes
   png_set_sig_bytes(png_ptr, 8);
@@ -116,8 +97,8 @@ GLuint loadTextureFromPNG(const char* filename, int &width, int &height) {
   if (!image_data) {
     //clean up memory and close stuff
     png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
-    //LOGE("Unable to allocate image_data while loading %s ", filename);
-    fclose(file);
+    printf("Unable to allocate image_data while loading %s ", filename);
+    fclose(fp);
     return TEXTURE_LOAD_ERROR;
   }
 
@@ -127,8 +108,8 @@ GLuint loadTextureFromPNG(const char* filename, int &width, int &height) {
     //clean up memory and close stuff
     png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
     delete[] image_data;
-    //LOGE("Unable to allocate row_pointer while loading %s ", filename);
-    fclose(file);
+    printf("Unable to allocate row_pointer while loading %s ", filename);
+    fclose(fp);
     return TEXTURE_LOAD_ERROR;
   }
   // set the individual row_pointers to point at the correct offsets of image_data
@@ -150,8 +131,8 @@ GLuint loadTextureFromPNG(const char* filename, int &width, int &height) {
   png_destroy_read_struct(&png_ptr, &info_ptr, &end_info);
   delete[] image_data;
   delete[] row_pointers;
-  fclose(file);
-
+  fclose(fp);
+	
   return texture;
 }
 

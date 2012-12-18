@@ -24,6 +24,7 @@ int main(int argc, char **argv) {
 	scene->addObject(obj);
 	int width, height;
 	obj->txID = loadTextureFromPNG("test_texture.png",width,height);
+	printf("w=%d h=%d\n",width,height);
 	obj->txCoord = texCoords;	
 	obj->apPolygon = rect;
 	obj->napVert = 4;
