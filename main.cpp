@@ -30,7 +30,9 @@ int main(int argc, char **argv) {
 	obj->napVert = 4;
 	k->setActiveScene(scene);
 	k->initGameLoop(argc, argv);
-	obj->txID = loadTextureFromPNG("test_texture.png",width,height);	
+	obj->txID = loadTextureFromPNG("test_texture.png",width,height);
+	obj->moveTo(80,80);
+	//bRender->moveView(80,80);
 	k->startGameLoop();
 	
 	return 0;

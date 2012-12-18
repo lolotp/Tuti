@@ -19,6 +19,10 @@ public:
 	float *txCoord;    ///coordinates of the texture	
 	unsigned int txID; ///ID of the texture that is going to be used
 	
+	//object's position
 	int layer;
+	float xPos, yPos;
+	
+	void moveTo(float newX, float newY);
 };
 #endif
