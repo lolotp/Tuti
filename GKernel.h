@@ -11,7 +11,7 @@ private:
 	static GKernel *instance;
 	GKernel();
 public:
-	
+	void startGameLoop();
 	void initGameLoop(int argc, char **argv);
 	void setActiveScene(GScene* scene);
 	void setRenderingEngine(GRenderingEngine *renderEngine);

@@ -24,8 +24,12 @@ void GKernel::initGameLoop(int argc, char**argv) {
 	glutDisplayFunc(&drawScene);
 	glutIdleFunc(&drawScene);
 	renderEngine->initGL(WindowsWidth, WindowsHeight);
-	glutMainLoop();
+	
 };
+
+void GKernel::startGameLoop() {
+	glutMainLoop();
+}
 
 void GKernel::setRenderingEngine(GRenderingEngine *_renderEngine) {
 	renderEngine = _renderEngine;

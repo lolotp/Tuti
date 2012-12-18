@@ -9,7 +9,8 @@ void GBasicRenderingEngine::initGL(int width, int height) {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);		// This Will Clear The Background Color To Black    
     glDisable(GL_DEPTH_TEST);			// Enables Depth Testing
     glShadeModel(GL_SMOOTH);			// Enables Smooth Color Shading
-
+	glEnable(GL_TEXTURE_2D);
+	printf("enabled texture 2D\n");
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();				// Reset The Projection Matrix
 	glOrtho (0, width, height, 0, 0, 1);    
@@ -30,12 +31,12 @@ void GBasicRenderingEngine::drawScene(GScene *activeScene) {
 				GObject *obj = objList[ (*objIt) ];
 				
 				glEnableClientState(GL_VERTEX_ARRAY);				
-				glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+				glEnableClientState(GL_TEXTURE_COORD_ARRAY);				
 				
 				glBindTexture(GL_TEXTURE_2D, obj->txID);
 				glVertexPointer(TUTI_DIM, GL_FLOAT, 0, obj->apPolygon);
 				glTexCoordPointer(TUTI_DIM, GL_FLOAT, 0, obj->txCoord);
-				glDrawArrays(GL_TRIANGLE_FAN, 0, obj->napVert);
+				glDrawArrays(GL_TRIANGLE_STRIP, 0, obj->napVert);
 				
 				glDisableClientState(GL_VERTEX_ARRAY);
 				glDisableClientState(GL_TEXTURE_COORD_ARRAY);

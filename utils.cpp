@@ -22,9 +22,9 @@ extern "C" {
  *
  */
 zip_file* file;
-
+FILE *fp;
 void png_zip_read(png_structp png_ptr, png_bytep data, png_size_t length) {
-  zip_fread(file, data, length);
+  fread(data, sizeof(png_byte), length, fp);
 }
 int x, y;
 png_byte color_type;
@@ -34,10 +34,11 @@ png_infop info_ptr;
 int number_of_passes;
 png_bytep * row_pointers;
 GLuint loadTextureFromPNG(const char* filename, int &width, int &height) {
+	printf("loading texture\n");
   png_byte header[8];    // 8 is the maximum size that can be checked
 
         /* open file and test for it being a png */
-        FILE *fp = fopen(filename, "rb");
+        fp = fopen(filename, "rb");
         if (!fp)
                 printf("[read_png_file] File %s could not be opened for reading", filename);
         fread(header, 1, 8, fp);
@@ -65,8 +66,8 @@ png_infop end_info = png_create_info_struct(png_ptr);
                 printf("[read_png_file] Error during init_io");
 
         //init png reading
-  png_init_io(png_ptr, fp);
-  //png_set_read_fn(png_ptr, NULL, png_zip_read);
+  //png_init_io(png_ptr, fp);
+  png_set_read_fn(png_ptr, NULL, png_zip_read);
 
   //let libpng know you already read the first 8 bytes
   png_set_sig_bytes(png_ptr, 8);
@@ -123,6 +124,7 @@ png_infop end_info = png_create_info_struct(png_ptr);
   GLuint texture;
   glGenTextures(1, &texture);
   glBindTexture(GL_TEXTURE_2D, texture);
+  printf("creating texture %u\n",texture);
   glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA,
       GL_UNSIGNED_BYTE, (GLvoid*) image_data);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
