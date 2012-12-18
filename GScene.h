@@ -19,7 +19,7 @@ private:
 public:
 	GScene();
 	GObjectID addObject(GObject *obj);
-	//removeObject	
-	friend class GRenderingEngine;
+	//removeObject
+	friend class GBasicRenderingEngine;
 };
 #endif

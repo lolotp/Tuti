@@ -5,6 +5,7 @@
 
 class GRenderingEngine {
 public:
-	void drawScene(GScene *scene);
+	virtual void drawScene(GScene *scene) = 0;
+	virtual void initGL(int width, int height) = 0;
 };
 #endif
