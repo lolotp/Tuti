@@ -14,12 +14,12 @@ typedef  unsigned int         GObjectID;
 typedef  hash_set<GObjectID>  Layer;
 class GScene {
 private:
-	std::vector< Layer > objByLayer;
-	std::vector<GObject*> objList;
+    std::vector< Layer > objByLayer;
+    std::vector<GObject*> objList;
 public:
-	GScene();
-	GObjectID addObject(GObject *obj);
-	//removeObject
-	friend class GBasicRenderingEngine;
+    GScene();
+    GObjectID addObject(GObject *obj);
+    //removeObject
+    friend class GBasicRenderingEngine;
 };
 #endif

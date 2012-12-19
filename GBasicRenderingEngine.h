@@ -5,13 +5,13 @@
 
 class GBasicRenderingEngine : public GRenderingEngine {
 private:
-	int top, left;
-	int width, height;
+    int top, left;
+    int width, height;
 public:
-	GBasicRenderingEngine();
-	void drawScene(GScene *scene);
-	void initGL(int width, int height);
-	void moveView(int newTop, int newLeft);
+    GBasicRenderingEngine();
+    void drawScene(GScene *scene);
+    void initGL(int width, int height);
+    void moveView(int newTop, int newLeft);
 };
 
 #endif

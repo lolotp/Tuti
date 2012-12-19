@@ -34,7 +34,7 @@ png_infop info_ptr;
 int number_of_passes;
 png_bytep * row_pointers;
 GLuint loadTextureFromPNG(const char* filename, int &width, int &height) {
-	printf("loading texture\n");
+    printf("loading texture\n");
   png_byte header[8];    // 8 is the maximum size that can be checked
 
         /* open file and test for it being a png */
@@ -134,7 +134,7 @@ png_infop end_info = png_create_info_struct(png_ptr);
   delete[] image_data;
   delete[] row_pointers;
   fclose(fp);
-	
+    
   return texture;
 }
 
