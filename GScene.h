@@ -12,6 +12,8 @@
 
 typedef  unsigned int         GObjectID;
 typedef  hash_set<GObjectID>  Layer;
+
+//TODO: redesign GScene to improve efficiency of removing objects
 class GScene {
 private:
     std::vector< Layer > objByLayer;
