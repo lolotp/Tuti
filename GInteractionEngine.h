@@ -7,5 +7,6 @@
 class GInteractionEngine {
 public:
     virtual void subscribeEvent(GEvent* event, GAction *action) = 0;
+    virtual void processWorld() = 0;
 };
 #endif
