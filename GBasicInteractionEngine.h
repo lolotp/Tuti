@@ -1,6 +1,9 @@
 #ifndef __G_BASIC_INTERACTION_ENGINE__
 #define __G_BASIC_INTERACTION_ENGINE__
-class GBasicInteractionEngine : public GBasicInteractionEngine {
+#include "GInteractionEngine.h"
+
+
+class GBasicInteractionEngine : public GInteractionEngine {
 public:
     GBasicInteractionEngine();
     void subscribeEvent(GEvent* event, GAction *action);

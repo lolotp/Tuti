@@ -1,5 +1,6 @@
 #include "GKernel.h"
 #include "GBasicRenderingEngine.h"
+#include "GBasicInteractionEngine.h"
 #include "utils.h"
 
 float val = 300;
@@ -18,8 +19,10 @@ int main(int argc, char **argv) {
     GKernel *k = GKernel::getInstance();
     GScene *scene = new GScene();
     GObject *obj = new GObject();
-    GBasicRenderingEngine *bRender = new GBasicRenderingEngine();
+    GRenderingEngine *bRender = new GBasicRenderingEngine();
+    GInteractionEngine *bItr = new GBasicInteractionEngine();
     k->setRenderingEngine(bRender);
+    k->setInteractionEngine(bItr);
     printf("layer : %d\n", obj->layer);
     scene->addObject(obj);
     int width, height;
