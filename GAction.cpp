@@ -1,4 +1,4 @@
 #include "GAction.h"
 
-void GAction::doAction() {
+void GAction::doAction(GEvent *eventData) {
 }
