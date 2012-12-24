@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
     //obj->moveTo(80,80);
     //bRender->moveView(80,80);
     
-    GMoveAction *act = new GMoveAction(obj, 0.001, 800,800);
+    GMoveAction *act = new GMoveAction(obj, 0.1, 800,800);
     bItr->subscribeEvent(1, act);
     k->startGameLoop();
     return 0;

@@ -48,6 +48,7 @@ void GKernel::drawScene() {
 void GKernel::processWorld() {
     GKernel *cur = getInstance();
     cur->interactionEngine->processWorld();
+    cur->renderEngine->drawScene(cur->activeScene);
 }
 
 void GKernel::setActiveScene(GScene *scene) {
