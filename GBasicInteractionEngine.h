@@ -16,7 +16,7 @@ private:
     std::queue< std::pair<GEventID, GEvent *> > eventQueue;
 public:
     GBasicInteractionEngine();    
-    GEventID registerEvent() = 0;
+    GEventID registerEvent();
     SubsID   subscribeEvent(GEventID, GAction *action);
     void     unsubscribeEvent(SubsID subsID);
     void     emitEvent(GEventID id, GEvent *eventData);
