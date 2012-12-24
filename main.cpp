@@ -18,10 +18,11 @@ public:
                                                                            tx(_tx),
                                                                            ty(_ty){};
     void doAction(GEvent* eventData) {
-        cout<<"here"<<endl;
+        
         float curX = movingObj->xPos, curY = movingObj->yPos;
+        cout<<"here"<<curX<<","<<curY<<endl;
         movingObj->moveTo(curX + speed, curY + speed);
-        if (curX > tx || curY > ty) speed = 0;
+        //if (curX > tx || curY > ty) speed = 0;
     };
 };
 int main(int argc, char **argv) {
@@ -57,8 +58,8 @@ int main(int argc, char **argv) {
     //obj->moveTo(80,80);
     //bRender->moveView(80,80);
     
-    GMoveAction *act = new GMoveAction(obj, 0.1, 800,800);
-    //bItr->subscribeEvent(1, act);
+    GMoveAction *act = new GMoveAction(obj, 0.001, 800,800);
+    bItr->subscribeEvent(1, act);
     k->startGameLoop();
     return 0;
 }

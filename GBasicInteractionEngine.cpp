@@ -39,10 +39,11 @@ void GBasicInteractionEngine::unsubscribeEvent(SubsID subsID) {
     delete node;
 };
 
-void GBasicInteractionEngine::processWorld() {
+void GBasicInteractionEngine::processWorld() {    
     GActionNode *head = eventList[FrameEvent];
     while (head != NULL) {
         head->action->doAction(NULL);
+        std::cout<<"processing events"<<std::endl;
         head = head->nxt;
     }
 };

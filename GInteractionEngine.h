@@ -1,6 +1,7 @@
 #ifndef __G_INTERACTION_ENGINE__
 #define __G_INTERACTION_ENGINE__
 
+#include "TutiConstants.h"
 #include "GEvent.h"
 #include "GAction.h"
 
