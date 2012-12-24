@@ -2,17 +2,18 @@
 #define __G_BASIC_INTERACTION_ENGINE__
 #include "GInteractionEngine.h"
 #include <queue>
+#include <vector>
 
 struct GActionNode {
     GAction *action;
-    GAction *nxt, *prev;
+    GActionNode *nxt, *prev;
 };
 //note, this implementation only works on 32-bit system
 //unsure about 64-bit system
 class GBasicInteractionEngine : public GInteractionEngine {
 private:
-    vector< GActionNode* > eventList;
-    std::queue< pair<GEventID, GEvent *eventData> > eventQueue;
+    std::vector< GActionNode* > eventList;
+    std::queue< std::pair<GEventID, GEvent *> > eventQueue;
 public:
     GBasicInteractionEngine();    
     GEventID registerEvent() = 0;

@@ -12,15 +12,15 @@ GEventID GBasicInteractionEngine::registerEvent() {
 };
 
 void GBasicInteractionEngine::emitEvent(GEventID id, GEvent *eventData) {
-    eventQueue.push( make_pair(id, eventData));
+    eventQueue.push( std::make_pair(id, eventData));
 };
 
 SubsID GBasicInteractionEngine::subscribeEvent(GEventID id, GAction *action) {
-    if (id >= eventList.size()) return;
+    if (id >= eventList.size()) return 0;
     GActionNode* newNode = new GActionNode();
     newNode->action = action;
     if (eventList[id] != NULL)
-        eventList[id].prev = newNode;
+        eventList[id]->prev = newNode;
     newNode->nxt  = eventList[id];
     newNode->prev = NULL;
     eventList[id] = newNode;
@@ -40,7 +40,7 @@ void GBasicInteractionEngine::unsubscribeEvent(SubsID subsID) {
 };
 
 void GBasicInteractionEngine::processWorld() {
-    GActionNode *head = eventList[frameEvent];
+    GActionNode *head = eventList[FrameEvent];
     while (head != NULL) {
         head->action->doAction(NULL);
         head = head->nxt;
