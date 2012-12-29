@@ -2,29 +2,13 @@
 using namespace std;
 
 #include "GKernel.h"
-#include "GAction.h"
+#include "GMoveAction.h"
 #include "GBasicRenderingEngine.h"
 #include "GBasicInteractionEngine.h"
 #include "utils.h"
 
 float val = 300;
-class GMoveAction : public GAction {
-    GObject* movingObj;
-    float speed;
-    float tx, ty;
-public:
-    GMoveAction(GObject *_movingObj, float _speed, float _tx, float _ty) : movingObj(_movingObj),
-                                                                           speed(_speed),
-                                                                           tx(_tx),
-                                                                           ty(_ty){};
-    void doAction(GEvent* eventData) {
-        
-        float curX = movingObj->xPos, curY = movingObj->yPos;
-        cout<<"here"<<curX<<","<<curY<<endl;
-        movingObj->moveTo(curX + speed, curY + speed);
-        //if (curX > tx || curY > ty) speed = 0;
-    };
-};
+
 int main(int argc, char **argv) {
     float rect[] = { 0  , val,
                      val, val,
@@ -55,10 +39,8 @@ int main(int argc, char **argv) {
     k->setActiveScene(scene);
     k->initGameLoop(argc, argv);
     obj->txID = loadTextureFromPNG("test_texture.png",width,height);
-    //obj->moveTo(80,80);
-    //bRender->moveView(80,80);
     
-    GMoveAction *act = new GMoveAction(obj, 0.1, 800,800);
+    GMoveAction *act = new GMoveAction(obj, 100, 100,100);
     bItr->subscribeEvent(1, act);
     k->startGameLoop();
     return 0;

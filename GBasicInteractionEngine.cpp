@@ -46,8 +46,7 @@ void GBasicInteractionEngine::unsubscribeEvent(SubsID subsID) {
 void GBasicInteractionEngine::processWorld() {    
     GActionNode *head = eventList[FrameEvent]->nxt;
     while (head != NULL) {
-        head->action->doAction(NULL);
-        std::cout<<"processing events"<<std::endl;
+        head->action->doAction(NULL);        
         head = head->nxt;
     }
 };
